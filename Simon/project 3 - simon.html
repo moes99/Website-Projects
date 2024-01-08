@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+        <title>Project 3 - Simon</title>
+        <style>
+            body{
+                background-color: #011F3F;
+                transition: all 0.4s;
+            }
+            h1{
+                width: 100%;
+                margin: auto;
+                text-align: center;
+                margin-bottom: 50px;
+                margin-top: 50px;
+                font-size: 70px;
+                font-family: 'VT323', monospace;
+                color: white;
+            }
+            #container{
+                width: 60%;
+                height: 100%;
+                margin: auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                column-gap: 10%;
+                row-gap: 10%;
+                justify-items: center;
+            }
+            .segment{
+                grid-row: span 1;
+                grid-column: span 1;
+                border: 10px solid black;
+                border-radius: 100%;
+                width: 200px;
+                aspect-ratio: 1 / 1;
+                transition: width 0.5s;
+                margin: auto;
+            }
+            .segment:hover, .flash{
+                width: 250px;
+            }
+            #s1{
+                background-color: red;
+            }
+            #s2{
+                background-color: green;
+            }
+            #s3{
+                background-color: yellow;
+            }
+            #s4{
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Press Any Key to Start</h1>
+        <div id="container">
+            <button id="s1" class="segment" value="r"></button>
+            <button id="s2" class="segment" value="g"></button>
+            <button id="s3" class="segment" value="y"></button>
+            <button id="s4" class="segment" value="b"></button>
+        </div>
+        <script type="text/javascript" defer>
+            //Functions
+            function user(){
+                let s = event.currentTarget;
+                if(s.value === sequence[clicks]){
+                    play(s.value);
+                    clicks++;
+                    user_input.push(s.value);
+                }
+                else{
+                    clicks = 0;
+                    level = 1;
+                    document.body.style.backgroundColor = 'red';
+                    heading.innerHTML = 'Game Over! Press Any Key to Start Again!';
+                    sequence = [];
+                    user_input = [];
+                    document.addEventListener('keypress',start);
+                    for (let segment of segments){
+                        segment.removeEventListener('click',user);
+                    }
+                    return;
+                }
+                if (user_input.length === sequence.length){
+                    clicks = 0;
+                    user_input = [];
+                    level++;
+                    next_level();
+                    return;
+                }
+            }
+            //Starts game
+            function start(){
+                document.removeEventListener('keypress',start);
+                document.body.style.backgroundColor = '#011F3F';
+                next_level();
+                for (let segment of segments){
+                    segment.addEventListener('click',user);
+                }
+            }
+            //Selects random color
+            function random_segment(){
+                let x = Math.floor(Math.random()*4);
+                return colors[x];
+            }
+            //Plays sound of every color in sequence
+            function play_sequence(){
+                let i = 0;
+                for (let s of sequence){
+                    window.setTimeout(()=>{
+                        flash(s);
+                        play(s);
+                    },1000*i);
+                    i++;
+                }
+            }
+            //Plays the sound of one color
+            function play(s){
+                let sound = new Audio("sounds/"+s+".mp3");
+                sound.play();
+            }
+            //Generates new level
+            function next_level(){
+                sequence.push(random_segment());
+                heading.innerHTML = 'Level '+level+'!';
+                window.setTimeout(play_sequence,2000);
+            }
+            //Shows button
+            function flash(color){
+                for (let segment of segments){
+                    if(segment.value == color){
+                        segment.classList.add('flash');
+                        window.setTimeout(() => {
+                            segment.classList.remove('flash');
+                        }, 500);
+                        return;
+                    }
+                }
+                return -1;
+            }
+
+            //Elements and Event Listeners
+            document.addEventListener('keypress',start);
+            const heading = document.querySelector('h1');
+            const segments = document.querySelectorAll('.segment');
+
+            //Variables
+            const colors = ['r','g','y','b'];
+            let sequence = [];
+            let user_input = [];
+            let clicks = 0;
+            let level  = 1;
+        </script>
+    </body>
+</html>
