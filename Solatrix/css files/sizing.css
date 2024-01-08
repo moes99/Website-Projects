@@ -1,0 +1,104 @@
+._container{
+    grid-row: span 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    vertical-align: center;
+}
+
+.grid-item-1{
+    grid-column: span 2;
+    grid-row: span 1;   
+}
+
+.grid-item-1 a{
+    text-decoration: none;
+    font-size: 16px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: yellow;
+}
+
+.space2{
+    grid-column: span 3;
+}
+
+._container hr{
+    grid-column: 1 / -1;
+    grid-row: span 1;
+    border: 2px solid #595218;
+    width: 100%;
+}
+
+.grid-item-2{
+    color: #b3842c;   
+}
+
+#_sizing_form{
+    color: #d6ad60;
+    grid-column: 1 / -1;
+    grid-row: span 1;
+    width: 100%;
+    margin-bottom: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+table{
+    border-collapse: collapse;
+    margin: auto;
+    width: 90%;
+    font-size: min(2.5vw, 16px);
+    color: #d6ad60;
+}
+
+table td, th{
+    border: 2px solid #b3842c;
+    padding: 1px;
+}
+
+#heat_results, #results{
+    text-align: left;
+}
+
+input[type="number"],[type="text"]{
+    width: 100%;
+    font-size: min(2.5vw, 16px);
+}
+
+select{
+    width: 100%;
+    font-size: min(2.5vw, 16px);
+}
+
+.nb{
+    text-align: center;
+}
+
+form button{
+    border-radius: 20px;
+    border: 2px solid #d6ad60;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+form button:hover{
+    background-color: #d6ad60;
+    color: black;
+    border-color: white;
+}
+
+#errors1, #errors2, #note{
+    color: red;
+    font-style: italic;
+}
+
+.output{
+    color: white;
+    font-weight: bold;
+}

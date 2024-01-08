@@ -1,0 +1,70 @@
+.cart{
+    grid-row: span 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    vertical-align: center;
+}
+
+.grid-item-1{
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.grid-item-1 a{
+    text-decoration: none;
+    font-size: 16px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: yellow;
+}
+
+.cart hr{
+    grid-column: 1 / -1;
+    grid-row: span 1;
+    border: 2px solid #595218;
+    width: 100%;
+}
+
+table{
+    color: white;
+    grid-column: span 5;
+    text-align: center;
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+}
+
+th{
+    background-color: gold;
+    color:black;
+    font-size: min(2.5vw,20px);
+    height: auto;
+    width: auto;
+}
+
+td{
+    width: max(20vw,40px);
+    height: max(20vw,40px);
+    font-size: min(2vw,24px);
+}
+
+table tr td img{
+    width: max(15vw,30px);
+    height: max(15vw,30px);
+    border-radius: 15%;
+}
+
+table tr td a{
+    color: white;
+    text-decoration: none;
+}
+
+.delete{
+    background-color: red;
+    border-radius: 20%;
+}
+
+@media screen and (max-width: 600px){
+    
+}

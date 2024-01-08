@@ -1,0 +1,56 @@
+/*Carousal*/
+#carousal{
+    width: 100vw;
+    height: 30vw;
+    background-repeat: no-repeat;
+    background-size: 100vw 30vw;
+    background-image: url("../resources/project\ images/image 1.jpg");
+    transition: background-image 1s;
+    margin: 5px;
+    border: 2px solid #F8D238;
+    border-radius: 20px;
+}
+
+#discover{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 100%;
+    border-radius: 20px;
+    transition: backdrop-filter 0.5s;
+}
+
+#discover:hover{
+    backdrop-filter: none;
+}
+
+.navigation{
+    border: 0;
+    background-color: transparent;
+}
+
+.navigation ion-icon{
+    border: 3px solid black;
+    border-radius: 100%;
+    background-color: transparent;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    color: black;
+    font-size: 5vw;
+}
+
+.navigation ion-icon:hover{
+    border-color: #F8D238;
+    color: white;
+}
+
+#discover div{
+    margin: 10px auto 10px auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 6.5vw;
+    font-weight: bold;
+    color: black;
+}
