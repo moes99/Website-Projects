@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<htmL>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins&effect=anaglyph">
+        <title>Drum 🥁 Kit Project</title>
+        <style>
+            body{
+                background-color: #262a42;
+            }
+            h1{
+                font-family: 'Poppins';
+                color: white;
+                width: 100%;
+                text-align: center;
+            }
+            #container{
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+            }
+            .button{
+                font-size: 50px;
+                text-align: center;
+                border: 7px solid #455091;
+                border-radius: 7px;
+                width: 120px;
+                aspect-ratio: 1 / 1;
+                cursor: pointer;
+                color: red;
+                font-weight: bold;
+                font-family: 'Poppins';
+            }
+            .button:active, .active{
+                box-shadow: inset 10px 10px 10px 100px rgba(223, 215, 215, 0.2);
+                outline: 3px solid black;
+                background: #e5e5e5;
+            }
+            form{
+                width: 100%;
+                display: inline-flex;
+                justify-content: space-around;
+            }
+            .grp{
+                display: inline-flex;
+                align-items: center;
+                background-color: grey;
+                border:  7px solid #455091;
+                border-radius: 20px;
+            }
+            .switch_label{
+                color: white;
+                font-size: 20px;
+                font-family: 'Poppins';
+            }
+            .container{
+                width: 60px;
+                height: 25px;
+                display: inline-block;
+                position: relative;
+                border-radius: 20px;
+                transition: ease 0.4s;
+                background-color: #455091;
+                cursor: pointer;
+            }
+            .container input{
+                width: 100%;
+                height: 100%;
+                opacity: 0%;
+                cursor: pointer;
+            }
+            .slider{
+                position: absolute;
+                border-radius: 100%;
+                aspect-ratio: 1 / 1;
+                height: 80%;
+                transition: ease 0.4s;
+                background-color: white;
+                top: 10%;
+                left: 4%;
+                right: 4%;
+            }
+            #play_btn{
+                font-size: 20px;
+                border: 7px solid #455091;
+                font-family: 'Poppins';
+                border-radius: 20px;
+                cursor: pointer;
+                background-color: grey;
+                color: white;
+                transition: all 0.4s;
+            }
+            #play_btn:hover{
+                background-color: white;
+                color: black;
+                border-color: red;
+            }
+            #play_btn:active{
+                box-shadow: inset 10px 10px 10px 100px rgba(74, 72, 72, 0.2);
+                outline: 3px solid black;
+                background: #e5e5e5;
+            }
+            #memory{
+                width: 30%;
+                border: 7px solid #455091;
+                font-family: 'Poppins';
+                border-radius: 20px;
+                background-color: grey;
+                color: white;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="font-effect-anaglyph">Drum 🥁 Kit</h1>
+        <div id="container">
+            <button class="button">w</button>
+            <button class="button">a</button>
+            <button class="button">s</button>
+            <button class="button">d</button>
+            <button class="button">j</button>
+            <button class="button">k</button>
+            <button class="button">l</button>
+        </div><br><br>
+        <form>
+            <div class="grp">
+                &nbsp;&nbsp;<span class="switch_label">Record</span>&nbsp;&nbsp;
+                <label for="switch" class="container">
+                    <input type="checkbox" name="switch" value="pressed"/>
+                    <span class="slider"></span>
+                </label>&nbsp;&nbsp;
+            </div>
+            <div class="grp">
+                &nbsp;&nbsp;<span class="switch_label">Repeat</span>&nbsp;&nbsp;
+                <label for="switch" class="container">
+                    <input type="checkbox" name="switch" value="pressed"/>
+                    <span class="slider"></span>
+                </label>&nbsp;&nbsp;
+            </div>
+            <span id="play_btn">&nbsp;&nbsp;Play Recorded Notes&nbsp;&nbsp;</span>
+            <span id="memory"></span>
+        </form>
+
+        <script type="text/javascript" defer>
+            //Functions
+            function play(){
+                let button = event.currentTarget;
+                if(checks[0].checked){
+                    memory.innerHTML += button.innerHTML+' ';
+                }
+                let sound_file = button.innerHTML+'.mp3';
+                let sound = new Audio('sounds/'+sound_file);
+                sound.play();
+            }
+
+            function toggle(){
+                let container = event.currentTarget;
+                let check = checks[containers_array.indexOf(container)];
+                let slider = sliders[containers_array.indexOf(container)];
+                if (check.checked){
+                    container.style.backgroundColor = 'red';
+                    slider.style.transform = 'translateX('+x+'px)';
+                }
+                else{
+                    container.style.backgroundColor = '#455091';
+                    slider.style.transform = 'translateX(0px)';
+                }
+            }
+
+            function play_memory(){
+                if(memory.innerHTML.length > 0){
+                    let notes = memory.innerHTML.trim();
+                    notes = notes.split(" ");
+                    let i = 0;
+                    if(!checks[1].checked && play_btn.innerHTML !== '&nbsp;&nbsp;Stop&nbsp;&nbsp;'){
+                        for (let note of notes){
+                            let sound = new Audio('sounds/'+note+'.mp3');
+                            window.setTimeout(function(){sound.play();},300*i);
+                            i++;
+                        }
+                        i = 0;
+                    }
+                    else if (checks[1].checked && play_btn.innerHTML !== '&nbsp;&nbsp;Stop&nbsp;&nbsp;'){
+                        for (let note of notes){
+                            let sound = new Audio('sounds/'+note+'.mp3');
+                            let delay = window.setInterval(function(){sound.play();},300*i);
+                            delays.push(delay);
+                            i++;
+                        }
+                        i = 0;
+                        play_btn.innerHTML = "&nbsp;&nbsp;Stop&nbsp;&nbsp;";
+                    }
+                    else{
+                        for (let delay of delays){
+                            clearInterval(delay);
+                        }
+                        play_btn.innerHTML = '&nbsp;&nbsp;Play Recorded Notes&nbsp;&nbsp;';
+                        delays = [];
+                    }
+                }
+                else{
+                    alert('No notes were recorded!');
+                }
+            }
+
+            document.onkeydown = function (e){
+                if (keys.includes(e.key)){
+                    let sound_file = e.key+'.mp3';
+                    let sound = new Audio('sounds/'+sound_file);
+                    sound.play();
+                    available_keys[e.key].classList.add('active');
+                    if(checks[0].checked){
+                        memory.innerHTML += e.key+" ";
+                    }
+                }
+            }
+
+            document.onkeyup = function (e){
+                if (keys.includes(e.key)){
+                    available_keys[e.key].classList.remove('active');
+                }
+            }
+
+            //Document Elements
+            const buttons = document.querySelectorAll('.button');
+            const checks = document.querySelectorAll('input');
+            const sliders = document.querySelectorAll(".slider");
+            const containers = document.querySelectorAll(".container");
+            const memory = document.getElementById('memory');
+            const play_btn = document.getElementById("play_btn");
+
+            //Constants  & Variables
+            const available_keys = {'w': null,'a': null,'s': null,'d': null,'j': null,'k': null,'l':null};
+            const keys = ['w','a','s','d','j','k','l'];
+            const containers_array = Array.from(containers);
+            const x = 0.92*containers[0].clientWidth - 0.8*containers[0].clientHeight;
+            let delays = [];
+
+            //Event Listeners
+            for (let i = 0; i < checks.length; i++){
+                containers[i].addEventListener('click', ()=>{
+                    checks[i].checked = checks[i].checked? false:true;
+                    toggle();
+                });
+            }
+            play_btn.addEventListener('click',play_memory);
+
+            //Initial Setup
+            for (let button of buttons){
+                button.addEventListener('click', play);
+                available_keys[button.innerHTML] = button;
+                button.style.backgroundImage = "url('images/"+button.innerHTML+".png')";
+            }
+        </script>
+    </body>
+</htmL>
